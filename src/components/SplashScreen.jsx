@@ -17,14 +17,13 @@ const SplashScreen = ({ onComplete }) => {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
             <div
-                className="absolute inset-0 z-0 opacity-60"
+                className="absolute inset-0 z-0"
                 style={{
                     backgroundImage: `url(${startupImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0" />
 
 
         </div>
