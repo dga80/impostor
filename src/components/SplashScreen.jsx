@@ -26,17 +26,7 @@ const SplashScreen = ({ onComplete }) => {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0" />
 
-            <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="relative z-10 p-4"
-            >
-                <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl tracking-tighter text-center uppercase">
-                    EL IMPOSTOR
-                </h1>
-            </motion.div>
+
         </div>
     );
 };
