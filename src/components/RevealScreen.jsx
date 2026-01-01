@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff, Check, Ghost } from 'lucide-react';
@@ -12,8 +12,29 @@ const RevealScreen = () => {
     const secretWord = isImpostor ? currentWord.impostor : currentWord.citizen;
     const category = currentWord.category;
 
-    const handleHoldStart = () => setIsRevealing(true);
-    const handleHoldEnd = () => setIsRevealing(false);
+    // Handle global release events to ensure we catch "letting go"
+    useEffect(() => {
+        const handleRelease = () => setIsRevealing(false);
+
+        if (isRevealing) {
+            window.addEventListener('mouseup', handleRelease);
+            window.addEventListener('touchend', handleRelease);
+            // Also handle touch cancel or mouse leave just in case
+            window.addEventListener('touchcancel', handleRelease);
+        }
+
+        return () => {
+            window.removeEventListener('mouseup', handleRelease);
+            window.removeEventListener('touchend', handleRelease);
+            window.removeEventListener('touchcancel', handleRelease);
+        };
+    }, [isRevealing]);
+
+    const handleHoldStart = (e) => {
+        // Prevent default to avoid potential text selection or context menus
+        // e.preventDefault(); // Might block click? Be careful.
+        setIsRevealing(true);
+    };
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-slate-900 text-center relative overflow-hidden">
@@ -64,8 +85,6 @@ const RevealScreen = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 1.1 }}
                         className="flex flex-col items-center justify-center gap-8 z-10 w-full"
-                        onMouseUp={handleHoldEnd}
-                        onTouchEnd={handleHoldEnd}
                     >
                         <div className={`p-8 rounded-3xl w-full max-w-sm border-2 ${isImpostor
                             ? 'bg-red-500/10 border-red-500/50'
