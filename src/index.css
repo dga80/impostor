@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: 'Inter', sans-serif;
+}
+
+@utility text-shadow {
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  @apply bg-slate-900 text-white min-h-screen overflow-x-hidden;
+  font-family: var(--font-inter);
+}
