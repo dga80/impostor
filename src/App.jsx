@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GameProvider, useGame } from './context/GameContext';
 import HomeScreen from './components/HomeScreen';
 import RevealScreen from './components/RevealScreen';
 import GameScreen from './components/GameScreen';
+import SplashScreen from './components/SplashScreen';
 
 const GameRouter = () => {
   const { gamePhase } = useGame();
@@ -20,6 +21,12 @@ const GameRouter = () => {
 };
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+
   return (
     <GameProvider>
       <div className="min-h-screen bg-slate-900 text-white selection:bg-purple-500 selection:text-white">
