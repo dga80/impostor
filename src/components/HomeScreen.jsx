@@ -18,11 +18,11 @@ const HomeScreen = () => {
     const canStart = players.length >= impostorCount + 2;
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-6 space-y-8 max-w-md mx-auto w-full">
+        <div className="flex flex-col h-[100dvh] bg-slate-900 p-6 max-w-md mx-auto w-full overflow-hidden">
             <motion.div
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="text-center space-y-2"
+                className="text-center space-y-2 mt-4 shrink-0"
             >
                 <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 drop-shadow-sm tracking-tighter">
                     IMPOSTOR
@@ -36,7 +36,7 @@ const HomeScreen = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.1 }}
                 onSubmit={handleAddPlayer}
-                className="w-full relative"
+                className="w-full relative mt-6 shrink-0"
             >
                 <input
                     type="text"
@@ -54,8 +54,8 @@ const HomeScreen = () => {
                 </button>
             </motion.form>
 
-            {/* Players List */}
-            <div className="w-full flex-1 min-h-[200px] max-h-[400px] overflow-y-auto px-1 custom-scrollbar">
+            {/* Players List - Flexible height */}
+            <div className="flex-1 overflow-y-auto px-1 custom-scrollbar my-4 min-h-0">
                 <AnimatePresence>
                     {players.map((player) => (
                         <motion.div
@@ -63,7 +63,7 @@ const HomeScreen = () => {
                             initial={{ x: -20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: 20, opacity: 0, height: 0 }}
-                            className="flex items-center justify-between bg-slate-800/80 p-4 rounded-xl mb-3 border border-slate-700 shadow-sm group"
+                            className="flex items-center justify-between bg-slate-800/80 p-4 rounded-xl mb-3 border border-slate-700 shadow-sm group shrink-0"
                         >
                             <div className="flex items-center gap-3">
                                 <div className="bg-slate-700 p-2 rounded-full text-purple-400">
@@ -93,12 +93,12 @@ const HomeScreen = () => {
                 </AnimatePresence>
             </div>
 
-            {/* Settings & Start */}
+            {/* Settings & Start - Fixed at bottom */}
             <motion.div
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="w-full space-y-6 bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 backdrop-blur-sm"
+                className="w-full space-y-4 bg-slate-800/50 p-5 rounded-3xl border border-slate-700/50 backdrop-blur-sm shrink-0 mb-safe"
             >
                 <div className="flex items-center justify-between">
                     <span className="text-slate-300 font-medium flex items-center gap-2">
@@ -111,8 +111,8 @@ const HomeScreen = () => {
                                 key={num}
                                 onClick={() => setImpostorCount(num)}
                                 className={`px-4 py-2 rounded-md font-bold transition-all ${impostorCount === num
-                                        ? 'bg-gradient-to-tr from-orange-500 to-red-500 text-white shadow-lg'
-                                        : 'text-slate-500 hover:text-slate-300'
+                                    ? 'bg-gradient-to-tr from-orange-500 to-red-500 text-white shadow-lg'
+                                    : 'text-slate-500 hover:text-slate-300'
                                     }`}
                             >
                                 {num}
@@ -125,8 +125,8 @@ const HomeScreen = () => {
                     onClick={startGame}
                     disabled={!canStart}
                     className={`w-full py-4 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 transition-all shadow-xl ${canStart
-                            ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:scale-[1.02] active:scale-[0.98] shadow-green-500/20'
-                            : 'bg-slate-700 text-slate-500 cursor-not-allowed'
+                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:scale-[1.02] active:scale-[0.98] shadow-green-500/20'
+                        : 'bg-slate-700 text-slate-500 cursor-not-allowed'
                         }`}
                 >
                     <Play size={24} fill="currentColor" />

@@ -33,7 +33,7 @@ const SplashScreen = ({ onComplete }) => {
                 transition={{ duration: 0.5 }}
                 className="relative z-10 p-4"
             >
-                <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-red-900 drop-shadow-2xl tracking-tighter text-center uppercase" style={{ WebkitTextStroke: '1px white' }}>
+                <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl tracking-tighter text-center uppercase">
                     EL IMPOSTOR
                 </h1>
             </motion.div>

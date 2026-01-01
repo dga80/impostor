@@ -67,32 +67,44 @@ const RevealScreen = () => {
                         exit={{ opacity: 0, scale: 1.1 }}
                         className="flex flex-col items-center justify-center gap-8 z-10 w-full"
                     >
-                        <div className={`p-8 rounded-3xl w-full max-w-sm border-2 ${isImpostor
-                                ? 'bg-red-500/10 border-red-500/50'
+                        <div className={`p-8 rounded-3xl w-full max-w-sm border-4 ${isImpostor
+                                ? 'bg-red-500/20 border-red-500 shadow-xl shadow-red-900/50'
                                 : 'bg-green-500/10 border-green-500/50'
-                            } backdrop-blur-xl relative`}>
+                            } backdrop-blur-xl relative transition-all duration-300`}>
 
-                            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 px-4 py-1 rounded-full border border-slate-700 text-slate-400 text-sm uppercase tracking-widest font-bold">
+                            <div className={`absolute -top-6 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full border-2 text-sm uppercase tracking-widest font-bold shadow-lg ${isImpostor
+                                    ? 'bg-red-600 border-red-400 text-white'
+                                    : 'bg-slate-900 border-slate-700 text-slate-400'
+                                }`}>
                                 {category}
                             </div>
 
-                            <h3 className="text-2xl text-slate-300 mb-2 font-medium">Tu palabra es:</h3>
-                            <h1 className={`text-5xl font-black ${isImpostor ? 'text-red-400' : 'text-green-400'} drop-shadow-lg`}>
-                                {secretWord}
-                            </h1>
-
-                            {isImpostor && (
-                                <div className="mt-4 px-3 py-1 bg-red-500/20 rounded-lg text-red-300 text-sm font-bold animate-pulse">
-                                    ⚠️ ERES EL IMPOSTOR
+                            {isImpostor ? (
+                                <div className="flex flex-col items-center gap-4 mt-4">
+                                    <span className="text-6xl animate-bounce">🤫</span>
+                                    <h1 className="text-5xl font-black text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] uppercase tracking-tight py-2">
+                                        {secretWord}
+                                    </h1>
+                                    <div className="px-6 py-2 bg-red-600 rounded-xl text-white font-bold text-xl animate-pulse shadow-lg border border-red-400">
+                                        ⚠️ ERES EL IMPOSTOR
+                                    </div>
+                                    <p className="text-red-300 text-sm font-medium mt-2">Disimula y culpa a otros.</p>
                                 </div>
+                            ) : (
+                                <>
+                                    <h3 className="text-2xl text-slate-300 mb-2 font-medium">Tu palabra es:</h3>
+                                    <h1 className="text-5xl font-black text-green-400 drop-shadow-lg">
+                                        {secretWord}
+                                    </h1>
+                                </>
                             )}
                         </div>
 
                         <button
                             onClick={handleNext}
-                            className="w-full max-w-sm bg-slate-800 text-slate-300 border border-slate-700 py-4 rounded-xl font-bold hover:bg-slate-700 hover:text-white transition-colors flex items-center justify-center gap-2"
+                            className="w-full max-w-sm py-4 rounded-xl font-bold text-lg text-white shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 border border-blue-400/30"
                         >
-                            <Check size={20} />
+                            <Check size={24} strokeWidth={3} />
                             Entendido / Ocultar
                         </button>
                     </motion.div>
