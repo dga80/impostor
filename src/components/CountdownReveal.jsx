@@ -117,7 +117,7 @@ const CountdownReveal = ({ impostors, onFinish }) => {
                                         className="text-7xl font-black text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)] uppercase break-words"
                                     >
                                         {name}
-                                    </h2>
+                                    </motion.h2>
                                 ))}
                             </div>
                         </div>
