@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGame } from '../context/GameContext';
-import { motion } from 'framer-motion';
-import { RefreshCw, Home, MessageCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { RefreshCw, Home, MessageCircle, Search } from 'lucide-react';
+import CountdownReveal from './CountdownReveal';
 
 const GameScreen = () => {
-    const { newRound, resetGame, currentWord } = useGame();
+    const { newRound, resetGame, currentWord, players } = useGame();
+    const [showReveal, setShowReveal] = useState(false);
+
+    const impostorNames = players
+        .filter(p => p.role === 'impostor')
+        .map(p => p.name);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-10">
+            <AnimatePresence>
+                {showReveal && (
+                    <CountdownReveal
+                        impostors={impostorNames}
+                        onFinish={() => setShowReveal(false)}
+                    />
+                )}
+            </AnimatePresence>
+
             <motion.div
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -32,23 +47,38 @@ const GameScreen = () => {
 
             <div className="w-full max-w-sm space-y-3">
                 <button
-                    onClick={newRound}
-                    className="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-bold text-lg shadow-lg shadow-purple-900/20 transition-all active:scale-95 flex items-center justify-center gap-2"
+                    onClick={() => setShowReveal(true)}
+                    className="w-full py-6 mb-4 relative group overflow-hidden rounded-2xl transition-all active:scale-95"
                 >
-                    <RefreshCw size={20} />
-                    Nueva Ronda
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-pink-600 group-hover:from-red-500 group-hover:to-pink-500 transition-all"></div>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-[radial-gradient(circle,white_10%,transparent_10%)] bg-[length:20px_20px] transition-opacity"></div>
+                    <div className="relative flex items-center justify-center gap-3 text-white font-black text-xl uppercase tracking-wider">
+                        <Search size={28} />
+                        DESCUBRIR IMPOSTOR
+                    </div>
                 </button>
 
-                <button
-                    onClick={resetGame}
-                    className="w-full py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-all active:scale-95 flex items-center justify-center gap-2"
-                >
-                    <Home size={20} />
-                    Menú Principal
-                </button>
+                <div className="grid grid-cols-2 gap-3">
+                    <button
+                        onClick={newRound}
+                        className="py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-bold text-lg shadow-lg shadow-purple-900/20 transition-all active:scale-95 flex items-center justify-center gap-2"
+                    >
+                        <RefreshCw size={20} />
+                        Ronda
+                    </button>
+
+                    <button
+                        onClick={resetGame}
+                        className="py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-all active:scale-95 flex items-center justify-center gap-2"
+                    >
+                        <Home size={20} />
+                        Menú
+                    </button>
+                </div>
             </div>
         </div>
     );
 };
 
 export default GameScreen;
+
